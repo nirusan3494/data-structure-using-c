@@ -1,0 +1,162 @@
+#include<stdio.h>
+#include<stdlib.h>
+//structure for SLL
+struct node{
+int data;
+struct node* next;
+};
+//Initialized head as null globally
+struct node *head=NULL;
+//---------------------------------------------INSERTION OPERATIONS--------------------------------------
+//------------------------insertion at first position---------------------
+void insert_at_front(int value){
+    struct node *newnode= (struct node*)malloc(sizeof(struct node));
+if(newnode==NULL){
+    printf("Malloc Failed\n");
+return;
+}
+else{
+        newnode->data=value;
+    newnode->next=head;
+    head=newnode;
+}
+}
+//------------------------insertion at last position---------------------
+void insert_at_end(int value){
+    struct node *newnode= (struct node*)malloc(sizeof(struct node));
+if(newnode==NULL){
+    printf("Malloc Failed\n");
+return;
+} else if(head==NULL) {
+newnode->data=value;
+newnode->next=NULL;
+head=newnode;
+}else{
+struct node *temp=head;
+while(temp->next!=NULL){
+    temp=temp->next;
+}
+newnode->data=value;
+temp->next=newnode;
+newnode->next=NULL;
+}}
+//------------------------insertion at specified position---------------------
+void insert_at_pos(int pos,int value){
+    struct node *newnode= (struct node*)malloc(sizeof(struct node));
+if(newnode==NULL){
+    printf("Malloc Failed\n");
+return;
+}else if(pos==0) {
+insert_at_front( value);
+free(newnode);
+return;
+}
+    {
+
+    struct node *temp=head;
+for(int i=0;i<pos-1 && temp!=NULL;i++){
+    temp=temp->next;
+}
+newnode->data=value;
+newnode->next=temp->next;
+temp->next=newnode;
+}}
+
+
+//---------------------------------------------DELETION OPERATIONS--------------------------------------
+//------------------------deletion at first position---------------------
+void delete_at_front(){
+    if(head==NULL) {
+            printf("The linked list is empty:\n");
+}
+else{
+    struct node *temp=head;
+    head=head->next;
+    free(temp);
+}}
+//------------------------deletion at last position---------------------
+void delete_at_end(){
+    struct node *temp=head;
+ if(head==NULL) {
+            printf("The linked list is empty:\n");
+}
+else if(temp->next==NULL){
+        free(temp);
+head=NULL;}
+else {
+    while(temp->next->next!=NULL){
+        temp=temp->next;
+    }
+    struct node *todelete=temp->next;
+    temp->next=NULL;
+    free(todelete);
+}
+}
+//------------------------deletion at specified position---------------------
+void delete_at_pos(int pos){
+    if(head==NULL){
+        printf("The Linked list is already empty");
+        return;
+    }
+else if(pos==0) {
+delete_at_front();
+return;
+}
+    {
+
+    struct node *temp=head;
+for(int i=0;i<pos-1 && temp!=NULL;i++){
+    temp=temp->next;
+}
+struct node *todelete=temp->next;
+temp->next=todelete->next;
+free(todelete);
+
+}}
+
+//---------------------------------------------Display OPERATIONS--------------------------------------
+//------------------------Display function---------------------
+void display(){
+if(head==NULL){
+    printf("Linked list is empty\n");
+}
+else{
+    struct node*temp=head;
+    while(temp!=NULL){
+        printf("%d\n",temp->data);
+        temp=temp->next;
+    }
+}
+}
+void main(){
+    printf("front insertion values:\n");
+insert_at_front(50);
+insert_at_front(40);
+insert_at_front(30);
+insert_at_front(20);
+insert_at_front(10);
+display();
+printf("end insertion values:\n");
+insert_at_end(70);
+insert_at_end(80);
+insert_at_end(90);
+display();
+printf("insertion at 2nd position:\n");
+insert_at_pos(2,100);
+display();
+printf("insertion at 3rd position:\n");
+insert_at_pos(3,700);
+display();
+printf("insertion at 0th position:\n");
+insert_at_pos(0,500);
+display();
+printf("Ater deletion at first pos\n");
+delete_at_front();
+display();
+printf("Ater deletion at last pos\n");
+delete_at_end();
+display();
+printf("Ater deletion at 2nd pos\n");
+delete_at_pos(2);
+display();
+}
