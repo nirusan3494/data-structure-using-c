@@ -1,0 +1,125 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node {
+    int data;
+    struct node *next;
+};
+
+struct node* head = NULL;
+
+// Insertion at front
+void insert_at_front(int value) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation Failed\n");
+        return;
+    }
+
+    newnode->data = value;
+
+    if (head == NULL) {
+        newnode->next = newnode;
+        head = newnode;
+        return;
+    }
+
+    struct node* temp = head;
+    while (temp->next != head) {
+        temp = temp->next;
+    }
+
+    temp->next = newnode;
+    newnode->next = head;
+    head = newnode;
+}
+
+// Insertion at end
+void insert_at_end(int value) {
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation Failed\n");
+        return;
+    }
+
+    newnode->data = value;
+
+    if (head == NULL) {
+        newnode->next = newnode;
+        head = newnode;
+        return;
+    }
+
+    struct node* temp = head;
+    while (temp->next != head) {
+        temp = temp->next;
+    }
+
+    temp->next = newnode;
+    newnode->next = head;
+}
+
+// Insertion at position
+void insert_at_pos(int pos, int value) {
+    if (pos == 0) {
+        insert_at_front(value);
+        return;
+    }
+
+    struct node* newnode = (struct node*)malloc(sizeof(struct node));
+    if (newnode == NULL) {
+        printf("Memory allocation Failed\n");
+        return;
+    }
+    newnode->data = value;
+
+    struct node* temp = head;
+    int count = 0;
+
+    while (count < pos - 1 && temp->next != head) {
+        temp = temp->next;
+        count++;
+    }
+
+    if (count != pos - 1) {
+        printf("Position out of range\n");
+        free(newnode);
+        return;
+    }
+
+    newnode->next = temp->next;
+    temp->next = newnode;
+}
+
+// Display function (without do-while)
+void display() {
+    if (head == NULL) {
+        printf("The linked list is empty\n");
+        return;
+    }
+
+    struct node* temp = head;
+    while (temp->next != head) {
+        printf("%d ", temp->data);
+        temp = temp->next;
+    }
+    printf("%d\n", temp->data); // Print last node
+}
+
+// Main function
+int main() {
+    printf("After insertion at front:\n");
+    insert_at_front(50);
+    insert_at_front(40);
+    display();
+
+    printf("After insertion at end:\n");
+    insert_at_end(60);
+    display();
+
+    printf("After insertion at position 2:\n");
+    insert_at_pos(2, 80);
+    display();
+
+    return 0;
+}
