@@ -1,0 +1,62 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+int data;
+struct node* next;
+};
+
+struct node *head=NULL;
+void insert_at_front(int value){
+    struct node *newnode= (struct node*)malloc(sizeof(struct node));
+if(newnode==NULL){
+    printf("Malloc Failed\n");
+return;
+}
+else{
+newnode->data=value;
+newnode->next=head;
+head=newnode;
+}
+}
+void reverse(){
+if(head==NULL){
+    printf("Your Original list is empty");
+    return;
+}
+struct node *nextnode=head;
+struct node *currentnode=head;
+struct node *prevnode=NULL;
+while(currentnode!=NULL){
+        nextnode=currentnode->next;
+        currentnode->next=prevnode;
+        prevnode=currentnode;
+        currentnode=nextnode;
+}
+
+head=prevnode;
+}
+void display(){
+if(head==NULL){
+    printf("Linked list is empty\n");
+}
+else{
+    struct node*temp=head;
+    while(temp!=NULL){
+        printf("%d->",temp->data);
+        temp=temp->next;
+    }
+}
+}
+int main(){
+printf("List before insertion\n");
+insert_at_front(50);
+insert_at_front(40);
+insert_at_front(30);
+insert_at_front(20);
+insert_at_front(10);
+display();
+printf("List ater reverse\n");
+reverse();
+display();
+}
