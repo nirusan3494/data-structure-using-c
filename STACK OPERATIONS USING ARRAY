@@ -1,0 +1,58 @@
+#include<stdio.h>
+ #define SIZE 100
+  int stack[SIZE];
+  int top=-1;
+
+  void push(int value){
+  if(top==SIZE-1){
+    printf("Stack Overflow");
+    return;
+  }
+  top++;
+  stack[top]=value;
+  }
+
+   void pop(){
+   if(top==-1){
+    printf("Stack Underflow");
+    return;
+  }
+  top--;
+   }
+
+   void peek(){
+   if(top==-1){
+    printf("Stack is Empty");
+    return;
+  }
+  printf("Peeked Element is %d\n",stack[top]);
+   }
+
+   void display(){
+   if(top==-1){
+    printf("Stack Empty");
+    return;
+  }
+  int i=top;
+  while(i!=NULL){
+        printf("%d\n",stack[i]);
+  i--;
+   }}
+
+  int main(){
+      printf("After Insertion\n ");
+  push(50);
+  push(40);
+  push(30);
+  push(20);
+  push(10);
+  display();
+  printf("After first Deletion\n ");
+  pop();
+  display();
+    printf("After Second Deletion\n ");
+  pop();
+  display();
+  peek();
+
+  }
