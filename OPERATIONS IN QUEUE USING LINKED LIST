@@ -42,7 +42,6 @@ free(front);
 else{
 
 front=front->next;
-
 }
 printf("deleted is: %d\n",temp->data);
 free(temp);
