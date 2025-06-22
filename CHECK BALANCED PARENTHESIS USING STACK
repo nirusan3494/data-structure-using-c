@@ -1,0 +1,64 @@
+#include<stdio.h>
+#include<string.h>
+#define SIZE 100
+char Stack[SIZE];
+char exp[SIZE];
+int top=-1;
+char symbol;
+
+void push(char symbol) {
+    if (top == SIZE - 1) {
+        printf("Stack Overflow\n");
+        return;
+    }
+    Stack[++top] = symbol;
+}
+
+char pop() {
+    if (top == -1) {
+        printf("Stack Underflow\n");
+        return '\0';
+    }
+    return Stack[top--];
+}
+
+int isEmpty() {
+    return top == -1;
+}
+
+int match(char open,char close){
+if(open=='('&& close==')')return 1;
+if(open=='{'&& close=='}')return 1;
+if(open=='['&& close==']')return 1;
+return 0;
+}
+
+void parenthesis(){
+for(int i=0;i<strlen(exp);i++){
+    symbol=exp[i];
+    if(symbol=='('||symbol=='{'|| symbol=='['){
+        push(symbol);
+       }
+       else if(symbol==')'|| symbol=='}'||symbol==']'){
+       if(isEmpty()){
+        printf("Unmatched closing bracket:%c\n",symbol);
+        return;
+       }
+       char temp=pop();
+       if(!match(temp,symbol)){
+        printf("Mismatched brackets :%c and %c\n",temp,symbol);
+        return;
+       }
+       }
+}
+if(isEmpty()){
+    printf("parenthesis are balanced.\n");}
+else{
+    printf("parenthesis unmatched\n");
+}}
+int main(){
+printf("Enter the Expression");
+scanf("%s",exp);
+parenthesis();
+return 0;
+}
