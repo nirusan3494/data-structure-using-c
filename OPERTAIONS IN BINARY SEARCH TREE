@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int data;
+    struct node* left;
+    struct node* right;
+};
+
+typedef struct node Node; 
+
+// Create a new node
+Node* createNode(int data) {
+    Node* n = (Node*) malloc(sizeof(Node));
+    n->data = data;
+    n->left = NULL;
+    n->right = NULL;
+    return n;
+}
+
+// Insert into BST
+Node* insert(Node* root, int data) {
+    if (root == NULL) {
+        return createNode(data);
+    }
+
+    if (data < root->data)
+        root->left = insert(root->left, data);
+    else if (data > root->data)
+        root->right = insert(root->right, data);
+
+    return root;
+}
+
+// Traversal functions
+void preOrder(Node* root) {
+    if (root == NULL) return;
+    printf("%d ", root->data);
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+void postOrder(Node* root) {
+    if (root == NULL) return;
+    postOrder(root->left);
+    postOrder(root->right);
+    printf("%d ", root->data);
+}
+
+void inOrder(Node* root) {
+    if (root == NULL) return;
+    inOrder(root->left);
+    printf("%d ", root->data);
+    inOrder(root->right);
+}
+
+// Search a key
+void search_key(Node *root, int key) {
+    if (root == NULL) {
+        printf("The key %d was not found in the BST.\n", key);
+
+       }
+     else if (root->data == key) {
+        printf("The key %d was found in the BST.\n", key);
+       }
+     else if (key < root->data) {
+        search_key(root->left, key);
+    } else(key>root->data) {
+    search_key(root->right, key);
+    }
+}
+
+// Delete a node from BST
+Node* deletenode(Node* root, int target) {
+    if (root == NULL) {
+        printf("The root doesn't exist\n");
+        return NULL;
+    }
+
+    if (target > root->data) {
+        root->right = deletenode(root->right, target);
+    } else if (target < root->data) {
+        root->left = deletenode(root->left, target);
+    } else {
+        // leaf node case
+        if (!root->left && !root->right) {
+            free(root);
+            return NULL;
+        }
+        //node with single child
+        else if (!root->right) {
+            Node* temp = root->left;
+            free(root);
+            return temp;
+        } else if (!root->left) {
+            Node* temp = root->right;
+            free(root);
+            return temp;
+        } else {
+            // Node with 2 children: find max in left subtree
+            Node* parent = root;
+            Node* child = root->left;
+            while (child->right) {
+                parent = child;
+                child = child->right;
+            }
+
+            if (parent != root) {
+                parent->right = child->left;
+                child->left = root->left;
+                child->right = root->right;
+            } else {
+                child->right = root->right;
+            }
+
+            free(root);
+            return child;
+        }
+    }
+    return root;
+}
+
+// Main function
+int main() {
+    Node* root = NULL;
+
+    // Insert values
+    root = insert(root, 2);
+    insert(root, 1);
+    insert(root, 4);
+    insert(root, 5);
+    insert(root, 7);
+    insert(root, 8);
+    insert(root, 0);
+    insert(root, 3);
+
+    printf("\nPre-order traversal:\n");
+    preOrder(root);
+
+    printf("\nPost-order traversal:\n");
+    postOrder(root);
+
+    printf("\nIn-order traversal:\n");
+    inOrder(root);
+
+    // Search key
+    int key;
+    printf("\nEnter the key value to be searched: ");
+    scanf("%d", &key);
+    search_key(root, key);
+
+    
+    int target;
+    printf("Enter the target to delete: "); 
+    scanf("%d", &target);
+
+    root = deletenode(root, target); 
+    printf("\nPre-order traversal after deletion:\n");
+    preOrder(root);
+
+    return 0;
+}
