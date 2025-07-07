@@ -1,0 +1,55 @@
+#include <stdio.h>
+#define SIZE 10
+
+int table[SIZE];
+
+// Step 1: Make all values -1 (empty)
+void createtable() {
+    for (int i = 0; i < SIZE; i++)
+        table[i] = -1;
+}
+
+// Step 2: Hash function
+int hashfunction(int key) {
+    return key % SIZE;
+}
+
+// Step 3: Insert with linear probing
+void insertintable(int value) {
+    int index = hashfunction(value);
+
+    // Linear probing
+    while (table[index] != -1) {
+        index = (index + 1) % SIZE;
+    }
+
+    table[index] = value;
+    printf("Inserted %d at index %d\n", value, index);
+}
+
+// Step 4: Display table
+void display() {
+    printf("\nHash Table:\n");
+    for (int i = 0; i < SIZE; i++) {
+        if (table[i] == -1)
+            printf("%d → [empty]\n", i);
+        else
+            printf("%d → %d\n", i, table[i]);
+    }
+}
+
+// Step 5: Main function
+int main() {
+    createtable(); // Start empty
+
+    // Insert values
+    insertintable(5);
+    insertintable(15);
+    insertintable(25);
+    insertintable(35);
+    insertintable(7);
+    insertintable(17);
+
+    display(); // Show table
+    return 0;
+}
