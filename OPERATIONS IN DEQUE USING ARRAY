@@ -1,0 +1,92 @@
+#include <stdio.h>
+#define SIZE 5
+
+// Global variables
+int front = -1;
+int rear = -1;
+int deque[SIZE];
+
+//----------------------Insertion at Front----------------------
+void insert_at_front(int value) {
+    if ((front - 1 + SIZE) % SIZE == rear) {
+        printf("Deque is already full\n");
+    } else if (front == -1 && rear == -1) {
+        front = rear = 0;
+        deque[front] = value;
+        printf("Inserted %d at front (first element)\n", value);
+    } else {
+        front = (front - 1 + SIZE) % SIZE;
+        deque[front] = value;
+        printf("Inserted %d at front. Front is now at index %d\n", value, front);
+    }
+}
+
+//----------------------Insertion at Rear----------------------
+void insert_at_rear(int value) {
+    if ((front - 1 + SIZE) % SIZE == rear) {
+        printf("Deque is already full\n");
+    } else if (front == -1 && rear == -1) {
+        front = rear = 0;
+        deque[rear] = value;
+        printf("Inserted %d at rear (first element)\n", value);
+    } else {
+        rear = (rear + 1) % SIZE;
+        deque[rear] = value;
+        printf("Inserted %d at rear. Rear is now at index %d\n", value, rear);
+    }
+}
+
+//----------------------Deletion at Front----------------------
+void delete_at_front() {
+    if (front == -1 && rear == -1) {
+        printf("The Deque is already empty\n");
+    } else if (front == rear) {
+        front = rear = -1;
+        printf("Deque is now empty\n");
+    } else {
+        front = (front + 1) % SIZE;
+        printf("Deleted element from front. Front is now at index %d\n", front);
+    }
+}
+
+//----------------------Deletion at Rear----------------------
+void delete_at_rear() {
+    if (front == -1 && rear == -1) {
+        printf("The Deque is already empty\n");
+    } else if (front == rear) {
+        front = rear = -1;
+        printf("Deque is now empty\n");
+    } else {
+        rear = (rear - 1 + SIZE) % SIZE;
+        printf("Deleted element from rear. Rear is now at index %d\n", rear);
+    }
+}
+
+//----------------------Display----------------------
+void display() {
+    if (front == -1 && rear == -1) {
+        printf("The Deque is already empty\n");
+    } else {
+        printf("The Deque is:\n");
+        int i = front;
+        while (i != rear) {
+            printf("%d ", deque[i]);
+            i = (i + 1) % SIZE;
+        }
+        printf("%d\n", deque[rear]);
+    }
+}
+
+int main() {
+    insert_at_front(10);
+    insert_at_front(20);
+    display();
+    insert_at_rear(30);
+    insert_at_rear(40);
+    display();
+    delete_at_front();
+    display();
+    delete_at_rear();
+    display();
+    return 0;
+}
