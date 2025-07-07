@@ -1,0 +1,100 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+int data;
+struct node *prev;
+struct node *next;
+};
+struct node*front;
+struct node *rear;
+//-------------------insertion from front--------------
+void insertfront(int value){
+struct node *newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=value;
+newnode->prev=NULL;
+newnode->next=front;
+if(front==NULL){
+front=rear=newnode;
+}else{
+front->prev=newnode;
+front=newnode;
+}
+}
+//-------------------insertion from rear----------------
+void insertrear(int value){
+struct node *newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=value;
+newnode->prev=rear;
+newnode->next=NULL;
+if(front==NULL){
+front=rear=newnode;
+}else{
+rear->next=newnode;
+rear=newnode;
+}
+}
+//---------------------deletion from front----------------
+void deletefront(){
+if(front==NULL){
+printf("Deque is already Empty");
+}
+else{
+struct node *temp;
+temp=front;
+front=front->next;
+if(front!=NULL)
+front->prev=NULL;
+else
+rear=NULL;
+free(temp);
+}
+}
+//---------------------deletion from rear-------------------
+void deleterear(){
+if(front==NULL){
+printf("deque is already empty");
+}else{
+struct node *temp=rear;
+rear=rear->prev;
+if(rear!=NULL){
+rear->next=NULL;
+}else{
+front=NULL;
+temp->prev=NULL;}
+free(temp);
+}
+}
+//----------------------displaynodes-----------------
+void display(){
+if(front==NULL){
+printf("deque is already empty");
+}else{
+struct node *temp=front;
+while(temp!=NULL){
+printf("%d\n",temp->data);
+temp=temp->next;
+}
+}}
+int main(){
+insertfront(10);
+insertfront(20);
+insertfront(30);
+insertfront(40);
+printf("Ater insertion at front\n");
+display();
+insertrear(50);
+insertrear(60);
+insertrear(70);
+insertrear(80);
+printf("Ater insertion at rear\n");
+display();
+deletefront();
+deletefront();
+printf("Ater deletion from front\n");
+display();
+deleterear();
+deleterear();
+printf("Ater deletion from rear\n");
+display();
+return 0;
+}
